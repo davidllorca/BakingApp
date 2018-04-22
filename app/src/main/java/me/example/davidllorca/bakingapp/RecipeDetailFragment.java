@@ -1,15 +1,15 @@
 package me.example.davidllorca.bakingapp;
 
 import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import me.example.davidllorca.bakingapp.data.DataSource;
+import me.example.davidllorca.bakingapp.data.Recipe;
 
 /**
  * A fragment representing a single Recipe detail screen.
@@ -27,7 +27,7 @@ public class RecipeDetailFragment extends Fragment {
     /**
      * The dummy name this fragment is presenting.
      */
-    private DataSource.Recipe mItem;
+    private Recipe mItem;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -44,10 +44,10 @@ public class RecipeDetailFragment extends Fragment {
             // Load the dummy name specified by the fragment
             // arguments. In a real-world scenario, use a Loader
             // to load name from a name provider.
-            mItem = DataSource.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+            mItem = getArguments().getParcelable(ARG_ITEM_ID);
 
             Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.toolbar_layout);
+            CollapsingToolbarLayout appBarLayout = activity.findViewById(R.id.toolbar_layout);
             if (appBarLayout != null) {
                 appBarLayout.setTitle(mItem.name);
             }
@@ -61,7 +61,7 @@ public class RecipeDetailFragment extends Fragment {
 
         // Show the dummy name as text in a TextView.
         if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.recipe_detail)).setText(mItem.details);
+            ((TextView) rootView.findViewById(R.id.recipe_detail)).setText(mItem.name);
         }
 
         return rootView;

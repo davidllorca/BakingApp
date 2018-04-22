@@ -25,3 +25,9 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    // App dependencies
+    supportLibraryVersion = '26.1.0'
+    picassoVersion = '2.5.2'
+}
