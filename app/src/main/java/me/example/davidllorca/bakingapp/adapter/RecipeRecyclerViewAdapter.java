@@ -1,13 +1,7 @@
-package me.example.davidllorca.bakingapp;
+package me.example.davidllorca.bakingapp.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,48 +13,22 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import me.example.davidllorca.bakingapp.data.DataSource;
+import me.example.davidllorca.bakingapp.R;
 import me.example.davidllorca.bakingapp.data.Recipe;
 
-public class ListActivity extends AppCompatActivity implements RecipeRecyclerViewAdapter.RecipeListener {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        setUpRecyclerView();
-    }
-
-    private void setUpRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.rv_recipes);
-        boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
-        if (isTablet) {
-            recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        } else {
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        }
-        recyclerView.setAdapter(new RecipeRecyclerViewAdapter(this, DataSource.generateFakeData(this), this));
-    }
-
-    @Override
-    public void onClickRecipe(Recipe recipe) {
-        Intent intent = new Intent(this, RecipeListActivity.class);
-        // TODO put arguments
-        startActivity(intent);
-    }
-}
-
-class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter.ViewHolder> {
+/**
+ * Created by David Llorca <davidllorcabaron@gmail.com> on 22/04/18.
+ */
+public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewAdapter
+        .ViewHolder> {
 
     private final Context mContext;
     private List<Recipe> mDataSet;
-    private RecipeListener mListener;
+    private RecipeRecyclerViewAdapter.RecipeListener mListener;
 
 
-    RecipeRecyclerViewAdapter(Context context, List<Recipe> dataSet, RecipeListener listener) {
+    public RecipeRecyclerViewAdapter(Context context, List<Recipe> dataSet,
+                                     RecipeRecyclerViewAdapter.RecipeListener listener) {
         super();
         mContext = context;
         mDataSet = dataSet;
@@ -99,7 +67,7 @@ class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecyclerViewA
         return mDataSet.size();
     }
 
-    interface RecipeListener {
+    public interface RecipeListener {
         void onClickRecipe(Recipe recipe);
     }
 
