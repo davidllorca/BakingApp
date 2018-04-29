@@ -58,13 +58,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeInf
             // activity should be in two-pane mode.
             mTwoPane = true;
         }
-        View recyclerView = findViewById(R.id.recipe_list);
-        assert recyclerView != null;
-        setupRecyclerView((RecyclerView) recyclerView);
+        View ingredientRecyclerView = findViewById(R.id.rv_ingredients);
+        View stepRecyclerView = findViewById(R.id.rv_steps);
+        assert ingredientRecyclerView != null;
+        assert stepRecyclerView != null;
+        setupRecyclerView((RecyclerView) ingredientRecyclerView, mRecipe.getIngredients());
+        setupRecyclerView((RecyclerView) stepRecyclerView, mRecipe.getSteps());
     }
 
-    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        recyclerView.setAdapter(new RecipeInfoRecyclerViewAdapter(this, mRecipe, this
+    private void setupRecyclerView(@NonNull RecyclerView recyclerView, List items) {
+        recyclerView.setAdapter(new RecipeInfoRecyclerViewAdapter(this, items, this
         ));
     }
 

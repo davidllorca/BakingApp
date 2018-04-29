@@ -7,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.example.davidllorca.bakingapp.R;
 import me.example.davidllorca.bakingapp.data.Ingredient;
-import me.example.davidllorca.bakingapp.data.Recipe;
 import me.example.davidllorca.bakingapp.data.Step;
 
 /**
@@ -26,19 +24,15 @@ public class RecipeInfoRecyclerViewAdapter extends RecyclerView
     private static final int STEP_TYPE = 1;
 
     private final Context mContext;
-    private final Recipe mRecipe;
     private final List mDataSet;
     private RecipeInfoRecyclerViewAdapter.RecipeStepListener mListener;
 
 
-    public RecipeInfoRecyclerViewAdapter(Context context, Recipe recipe, RecipeStepListener
+    public RecipeInfoRecyclerViewAdapter(Context context, List<Ingredient> items, RecipeStepListener
             listener) {
         super();
         mContext = context;
-        mRecipe = recipe;
-        mDataSet = new ArrayList();
-        mDataSet.addAll(recipe.getIngredients());
-        mDataSet.addAll(recipe.getSteps());
+        mDataSet = items;
         mListener = listener;
     }
 
