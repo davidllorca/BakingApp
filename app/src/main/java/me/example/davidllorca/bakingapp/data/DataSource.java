@@ -101,8 +101,8 @@ public class DataSource {
             if (object.has(Step.Columns.VIDEO_URL)) {
                 step.setVideoURL(object.optString(Step.Columns.VIDEO_URL));
             }
-            if (object.has(Step.Columns.THUMBNAIL)) {
-                step.setThumbnail(object.optString(Step.Columns.THUMBNAIL));
+            if (object.has(Step.Columns.THUMBNAIL_URL)) {
+                step.setThumbnail(object.optString(Step.Columns.THUMBNAIL_URL));
             }
             return step;
         } catch (JSONException e) {

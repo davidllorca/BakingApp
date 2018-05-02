@@ -30,4 +30,5 @@ ext {
     // App dependencies
     supportLibraryVersion = '26.1.0'
     picassoVersion = '2.5.2'
+    exoPlayerVersion = '2.7.3'
 }

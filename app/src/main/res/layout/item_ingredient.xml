@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_ingredient_name"
+    style="@style/TextAppearance.AppCompat.Body1"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    card_view:cardBackgroundColor="@color/cardview_dark_background"
-    card_view:cardCornerRadius="4dp"
-    card_view:cardElevation="4dp"
-    card_view:layout_anchorGravity="center_vertical|center_horizontal">
-
-    <TextView
-        android:id="@+id/tv_ingredient_name"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</android.support.v7.widget.CardView>
+    android:layout_height="wrap_content" />

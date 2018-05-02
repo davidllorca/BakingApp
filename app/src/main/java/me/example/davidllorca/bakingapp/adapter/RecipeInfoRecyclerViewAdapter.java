@@ -5,7 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -63,6 +66,11 @@ public class RecipeInfoRecyclerViewAdapter extends RecyclerView
             case STEP_TYPE:
                 final Step step = (Step) mDataSet.get(position);
                 ((StepViewHolder) holder).mShortDescriptionView.setText(step.getShortDescription());
+                if (!step.getThumbnail().isEmpty()) {
+                    Picasso.with(mContext)
+                            .load(step.getThumbnail())
+                            .into((ImageView) ((StepViewHolder) holder).mThumbnailView);
+                }
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -99,10 +107,12 @@ public class RecipeInfoRecyclerViewAdapter extends RecyclerView
     class StepViewHolder extends RecyclerView.ViewHolder {
 
         final TextView mShortDescriptionView;
+        final View mThumbnailView;
 
         StepViewHolder(View view) {
             super(view);
             mShortDescriptionView = view.findViewById(R.id.tv_step_short_description);
+            mThumbnailView = view.findViewById(R.id.iv_step_thumbnail);
         }
     }
 

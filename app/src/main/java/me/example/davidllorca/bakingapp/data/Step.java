@@ -99,6 +99,6 @@ public class Step implements Parcelable {
         static final String SHORT_DESCRIPTION = "shortDescription";
         static final String DESCRIPTION = "description";
         static final String VIDEO_URL = "videoURL";
-        static final String THUMBNAIL = "thumbnail";
+        static final String THUMBNAIL_URL = "thumbnailURL";
     }
 }

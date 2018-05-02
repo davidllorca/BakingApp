@@ -4,4 +4,6 @@
     <string name="title_activity_list">ListActivity</string>
     <string name="ingredients">Ingredients</string>
     <string name="steps">Steps</string>
+    <string name="action_next">Next</string>
+    <string name="action_previous">Previous</string>
 </resources>
