@@ -36,16 +36,17 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeInf
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_list);
+        setContentView(R.layout.activity_recipe_detail);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar_recipe_detail);
         setSupportActionBar(toolbar);
-        toolbar.setTitle(getTitle());
 
         mRecipe = getIntent().getParcelableExtra(RECIPE_KEY);
         if(mRecipe == null){
             finish();
         }
+
+        getSupportActionBar().setTitle(mRecipe.getName());
 
         if (findViewById(R.id.step_detail_container) != null) {
             // The detail container view will be present only in the

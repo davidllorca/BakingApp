@@ -94,6 +94,21 @@ public class Step implements Parcelable {
         dest.writeString(thumbnail);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Step)) return false;
+
+        Step step = (Step) o;
+
+        return getId() == step.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return getId();
+    }
+
     class Columns {
         static final String ID = "id";
         static final String SHORT_DESCRIPTION = "shortDescription";

@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    card_view:cardBackgroundColor="@color/colorPrimary"
+    android:layout_margin="8dp"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="4dp"
     card_view:layout_anchorGravity="center_vertical|center_horizontal">
@@ -17,18 +16,21 @@
 
         <ImageView
             android:id="@+id/iv_recipe_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_room_service_black_48dp"
-            android:minHeight="300dp"
-            tools:layout_height="300dp"
-            tools:layout_width="match_parent" />
+            android:layout_width="112dp"
+            android:layout_height="112dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_margin="32dp"
+            android:background="@drawable/ic_cake_piece"
+            tools:layout_height="112dp"
+            tools:layout_width="112dp" />
 
         <TextView
             android:id="@+id/tv_recipe_name"
+            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorAccent"
+            android:padding="4dp"
             tools:text="Recipe name" />
     </LinearLayout>
 

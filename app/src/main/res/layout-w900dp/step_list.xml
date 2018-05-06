@@ -26,9 +26,10 @@
         android:orientation="vertical">
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Subhead"
+            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="@string/ingredients"
             tools:text="Ingredients" />
 
@@ -44,9 +45,10 @@
             tools:listitem="@layout/item_ingredient" />
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Subhead"
+            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="@string/steps"
             tools:text="Steps" />
 

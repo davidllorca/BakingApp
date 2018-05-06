@@ -1,11 +1,14 @@
 package me.example.davidllorca.bakingapp;
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -21,34 +24,37 @@ import com.google.android.exoplayer2.util.Util;
 
 import me.example.davidllorca.bakingapp.data.Step;
 
-/**
- * A fragment representing a single Recipe detail screen.
- * This fragment is either contained in a {@link RecipeDetailActivity}
- * in two-pane mode (on tablets) or a {@link StepDetailActivity}
- * on handsets.
- */
 public class StepDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String STEP_KEY = "item_id";
 
-    /**
-     * The dummy name this fragment is presenting.
-     */
-    private Step mItem;
+    public static final String STEP_KEY = "step";
+    private static final String HAS_PREVIOUS_KEY = "hasPrevious";
+    private static final String HAS_NEXT_KEY = "hasNext";
+
+    private Step step;
     private SimpleExoPlayerView playerView;
     private boolean playWhenReady;
     private int currentWindow = 0;
     private long playbackPosition = 0;
     private SimpleExoPlayer player;
+    private View prevNextControls;
+    private boolean isTablet;
+    private Button prevBtn;
+    private Button nextBtn;
+    private PlayControl mListener;
+    private boolean hasPreviousStep;
+    private boolean hasNextStep;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public StepDetailFragment() {
+    }
+
+    public static StepDetailFragment newInstance(Step step, boolean hasPrevStep, boolean hasNextStep) {
+        Bundle args = new Bundle();
+        args.putParcelable(STEP_KEY, step);
+        args.putBoolean(HAS_PREVIOUS_KEY, hasPrevStep);
+        args.putBoolean(HAS_NEXT_KEY, hasNextStep);
+        StepDetailFragment fragment = new StepDetailFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -56,11 +62,22 @@ public class StepDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments().containsKey(STEP_KEY)) {
-            // Load the dummy name specified by the fragment
-            // arguments. In a real-world scenario, use a Loader
-            // to load name from a name provider.
-            mItem = getArguments().getParcelable(STEP_KEY);
+            step = getArguments().getParcelable(STEP_KEY);
+            hasPreviousStep = getArguments().getBoolean(HAS_PREVIOUS_KEY);
+            hasNextStep = getArguments().getBoolean(HAS_NEXT_KEY);
+            setHasOptionsMenu(true);
+            FragmentActivity parentActivity = getActivity();
+            if (parentActivity instanceof StepDetailActivity) {
+                ((StepDetailActivity) parentActivity).getSupportActionBar().setTitle(step.getShortDescription());
+                mListener = (PlayControl) getActivity();
+            }
         }
+
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 
     @Override
@@ -69,9 +86,39 @@ public class StepDetailFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.step_detail, container, false);
 
         // Show the dummy name as text in a TextView.
-        if (mItem != null) {
-            ((TextView) rootView.findViewById(R.id.tv_step_detail_description)).setText(mItem.description);
+        if (step != null) {
+            ((TextView) rootView.findViewById(R.id.tv_step_detail_description)).setText(step.description);
             playerView = rootView.findViewById(R.id.player_step_detail_video);
+            prevNextControls = rootView.findViewById(R.id.layout_step_detail_controls);
+
+            isTablet = getResources().getBoolean(R.bool.is_tablet);
+            if (isTablet) {
+                prevNextControls.setVisibility(View.GONE);
+            } else {
+                prevBtn = rootView.findViewById(R.id.btn_step_detail_prev);
+                if (hasPreviousStep) {
+                    prevBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mListener.onPreviousClick(step);
+                        }
+                    });
+                } else {
+                    prevBtn.setVisibility(View.INVISIBLE);
+                }
+
+                nextBtn = rootView.findViewById(R.id.btn_step_detail_next);
+                if (hasNextStep) {
+                    nextBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mListener.onNextClick(step);
+                        }
+                    });
+                } else {
+                    nextBtn.setVisibility(View.INVISIBLE);
+                }
+            }
         }
 
         return rootView;
@@ -87,7 +134,7 @@ public class StepDetailFragment extends Fragment {
         player.setPlayWhenReady(playWhenReady);
         player.seekTo(currentWindow, playbackPosition);
 
-        Uri uri = Uri.parse(mItem.getVideoURL());
+        Uri uri = Uri.parse(step.getVideoURL());
         MediaSource mediaSource = buildMediaSource(uri);
         player.prepare(mediaSource, true, false);
     }
