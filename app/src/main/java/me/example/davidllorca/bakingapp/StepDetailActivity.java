@@ -73,7 +73,9 @@ public class StepDetailActivity extends AppCompatActivity implements PlayControl
             int prevPos = targetRecipe.getSteps().indexOf(currentStep) - 1;
             Step previousStep = targetRecipe.getSteps().get(prevPos);
             boolean hasNextStep = hasNextStep(previousStep, targetRecipe);
-            StepDetailFragment fragment = StepDetailFragment.newInstance(previousStep, true, hasNextStep);
+            hasPreviousStep = hasPrevStep(previousStep, targetRecipe);
+            StepDetailFragment fragment = StepDetailFragment.newInstance(previousStep, hasPreviousStep,
+                    hasNextStep);
             attachFragment(fragment);
         }
     }
@@ -85,7 +87,9 @@ public class StepDetailActivity extends AppCompatActivity implements PlayControl
             int nextPos = targetRecipe.getSteps().indexOf(currentStep) + 1;
             Step nextStep = targetRecipe.getSteps().get(nextPos);
             boolean hasPreviousStep = hasPrevStep(nextStep, targetRecipe);
-            StepDetailFragment fragment = StepDetailFragment.newInstance(nextStep, hasPreviousStep, true);
+            hasNextStep = hasNextStep(nextStep, targetRecipe);
+            StepDetailFragment fragment = StepDetailFragment.newInstance(nextStep,
+                    hasPreviousStep, hasNextStep);
             attachFragment(fragment);
         }
     }

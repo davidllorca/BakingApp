@@ -29,7 +29,7 @@ public class Step implements Parcelable {
     public String videoURL;
     public String thumbnail;
 
-    Step() {
+    public Step() {
     }
 
     protected Step(Parcel in) {

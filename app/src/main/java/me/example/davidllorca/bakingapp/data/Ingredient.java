@@ -23,7 +23,7 @@ public class Ingredient implements Parcelable {
     private String measure;
     private String ingredient;
 
-    Ingredient() {
+    public Ingredient() {
     }
 
     private Ingredient(Parcel in) {

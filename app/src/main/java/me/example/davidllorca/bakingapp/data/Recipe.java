@@ -29,7 +29,7 @@ public class Recipe implements Parcelable {
     public int servings;
     public String image;
 
-    Recipe() {
+    public Recipe() {
     }
 
     protected Recipe(Parcel in) {
@@ -71,7 +71,7 @@ public class Recipe implements Parcelable {
         return ingredients;
     }
 
-    void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -79,7 +79,7 @@ public class Recipe implements Parcelable {
         return steps;
     }
 
-    void setSteps(List<Step> steps) {
+    public void setSteps(List<Step> steps) {
         this.steps = steps;
     }
 
@@ -87,7 +87,7 @@ public class Recipe implements Parcelable {
         return servings;
     }
 
-    void setServings(int servings) {
+    public void setServings(int servings) {
         this.servings = servings;
     }
 
@@ -95,7 +95,7 @@ public class Recipe implements Parcelable {
         return image;
     }
 
-    void setImage(String image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

@@ -20,7 +20,7 @@ import me.example.davidllorca.bakingapp.data.Step;
  * Created by David Llorca <davidllorcabaron@gmail.com> on 22/04/18.
  */
 
-public class RecipeInfoRecyclerViewAdapter extends RecyclerView
+public class RecipeInfoRecyclerViewAdapter<T> extends RecyclerView
         .Adapter<RecyclerView.ViewHolder> {
 
     private static final int INGREDIENT_TYPE = 0;
@@ -31,7 +31,7 @@ public class RecipeInfoRecyclerViewAdapter extends RecyclerView
     private RecipeInfoRecyclerViewAdapter.RecipeStepListener mListener;
 
 
-    public RecipeInfoRecyclerViewAdapter(Context context, List<Ingredient> items, RecipeStepListener
+    public RecipeInfoRecyclerViewAdapter(Context context, List<T> items, RecipeStepListener
             listener) {
         super();
         mContext = context;
