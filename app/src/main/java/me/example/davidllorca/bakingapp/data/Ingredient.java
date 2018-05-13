@@ -52,7 +52,7 @@ public class Ingredient implements Parcelable {
         return ingredient;
     }
 
-    void setIngredient(String ingredient) {
+    public void setIngredient(String ingredient) {
         this.ingredient = ingredient;
     }
 
