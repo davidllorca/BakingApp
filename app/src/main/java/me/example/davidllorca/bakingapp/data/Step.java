@@ -52,7 +52,7 @@ public class Step implements Parcelable {
         return shortDescription;
     }
 
-    void setShortDescription(String shortDescription) {
+    public void setShortDescription(String shortDescription) {
         this.shortDescription = shortDescription;
     }
 
@@ -60,7 +60,7 @@ public class Step implements Parcelable {
         return description;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -68,7 +68,7 @@ public class Step implements Parcelable {
         return videoURL;
     }
 
-    void setVideoURL(String videoURL) {
+    public void setVideoURL(String videoURL) {
         this.videoURL = videoURL;
     }
 
@@ -76,7 +76,7 @@ public class Step implements Parcelable {
         return thumbnail;
     }
 
-    void setThumbnail(String thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 

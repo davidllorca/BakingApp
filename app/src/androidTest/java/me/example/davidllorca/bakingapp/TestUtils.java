@@ -20,6 +20,10 @@ public class TestUtils {
         Ingredient ingredient = new Ingredient();
         recipe.setIngredients(Arrays.asList(ingredient, ingredient, ingredient));
         Step step = new Step();
+        step.setDescription("Long description");
+        step.setShortDescription("Short description");
+        step.setVideoURL("http://videoUrl");
+        step.setThumbnail("http://url");
         recipe.setSteps(Arrays.asList(step, step, step, step));
         return recipe;
     }
