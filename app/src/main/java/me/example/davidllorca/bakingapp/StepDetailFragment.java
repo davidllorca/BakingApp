@@ -3,6 +3,8 @@ package me.example.davidllorca.bakingapp;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
@@ -47,7 +49,8 @@ public class StepDetailFragment extends Fragment {
     public StepDetailFragment() {
     }
 
-    public static StepDetailFragment newInstance(Step step, boolean hasPrevStep, boolean hasNextStep) {
+    public static StepDetailFragment newInstance(Step step, boolean hasPrevStep, boolean
+            hasNextStep) {
         Bundle args = new Bundle();
         args.putParcelable(STEP_KEY, step);
         args.putBoolean(HAS_PREVIOUS_KEY, hasPrevStep);
@@ -60,19 +63,39 @@ public class StepDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments().containsKey(STEP_KEY)) {
-            step = getArguments().getParcelable(STEP_KEY);
-            hasPreviousStep = getArguments().getBoolean(HAS_PREVIOUS_KEY);
-            hasNextStep = getArguments().getBoolean(HAS_NEXT_KEY);
-            setHasOptionsMenu(true);
-            FragmentActivity parentActivity = getActivity();
-            if (parentActivity instanceof StepDetailActivity) {
-                ((StepDetailActivity) parentActivity).getSupportActionBar().setTitle(step.getShortDescription());
-                mListener = (PlayControl) getActivity();
+        setHasOptionsMenu(true);
+        if (savedInstanceState == null) {
+            if (getArguments().containsKey(STEP_KEY)) {
+                step = getArguments().getParcelable(STEP_KEY);
+                hasPreviousStep = getArguments().getBoolean(HAS_PREVIOUS_KEY);
+                hasNextStep = getArguments().getBoolean(HAS_NEXT_KEY);
             }
+        } else {
+            step = savedInstanceState.getParcelable(STEP_KEY);
+            hasPreviousStep = savedInstanceState.getBoolean(HAS_PREVIOUS_KEY);
+            hasNextStep = savedInstanceState.getBoolean(HAS_NEXT_KEY);
+            playbackPosition = savedInstanceState.getLong("pos");
         }
+    }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FragmentActivity parentActivity = getActivity();
+        if (parentActivity instanceof StepDetailActivity) {
+            ((StepDetailActivity) parentActivity).getSupportActionBar().setTitle(step
+                    .getShortDescription());
+            mListener = (PlayControl) getActivity();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putParcelable(STEP_KEY, step);
+        outState.putBoolean(HAS_PREVIOUS_KEY, hasPreviousStep);
+        outState.putBoolean(HAS_NEXT_KEY, hasNextStep);
+        outState.putLong("pos", player.getCurrentPosition());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -87,7 +110,8 @@ public class StepDetailFragment extends Fragment {
 
         // Show the dummy name as text in a TextView.
         if (step != null) {
-            ((TextView) rootView.findViewById(R.id.tv_step_detail_description)).setText(step.description);
+            ((TextView) rootView.findViewById(R.id.tv_step_detail_description)).setText(step
+                    .description);
             playerView = rootView.findViewById(R.id.player_step_detail_video);
             prevNextControls = rootView.findViewById(R.id.layout_step_detail_controls);
 
@@ -174,7 +198,10 @@ public class StepDetailFragment extends Fragment {
     public void onPause() {
         super.onPause();
         if (Util.SDK_INT <= 23) {
-            releasePlayer();
+//            releasePlayer();
+            // TODO seguir aqui https://github
+            // .com/google/ExoPlayer/blob/release-v2/demos/main/src/main/java/com/google/android
+            // /exoplayer2/demo/PlayerActivity.java
         }
     }
 
@@ -186,4 +213,11 @@ public class StepDetailFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (Util.SDK_INT > 23) {
+            releasePlayer();
+        }
+    }
 }

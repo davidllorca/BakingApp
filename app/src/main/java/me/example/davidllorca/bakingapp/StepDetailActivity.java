@@ -35,10 +35,21 @@ public class StepDetailActivity extends AppCompatActivity implements PlayControl
             // using a fragment transaction.
             targetRecipe = getIntent().getParcelableExtra(RecipeDetailActivity.RECIPE_KEY);
             targetStep = getIntent().getParcelableExtra(StepDetailFragment.STEP_KEY);
-
-            StepDetailFragment fragment = StepDetailFragment.newInstance(targetStep, hasPrevStep(targetStep, targetRecipe), hasNextStep(targetStep, targetRecipe));
-            attachFragment(fragment);
+        } else {
+            targetRecipe = savedInstanceState.getParcelable(RecipeDetailActivity.RECIPE_KEY);
+            targetStep = savedInstanceState.getParcelable(StepDetailFragment.STEP_KEY);
         }
+
+        StepDetailFragment fragment = StepDetailFragment.newInstance(targetStep, hasPrevStep
+                (targetStep, targetRecipe), hasNextStep(targetStep, targetRecipe));
+        attachFragment(fragment);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(RecipeDetailActivity.RECIPE_KEY, targetRecipe);
+        outState.putParcelable(StepDetailFragment.STEP_KEY, targetStep);
+        super.onSaveInstanceState(outState);
     }
 
     private boolean hasNextStep(Step targetStep, Recipe targetRecipe) {

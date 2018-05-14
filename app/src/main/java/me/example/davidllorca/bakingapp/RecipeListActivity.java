@@ -8,13 +8,19 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
+import java.util.List;
+
 import me.example.davidllorca.bakingapp.adapter.RecipeRecyclerViewAdapter;
-import me.example.davidllorca.bakingapp.data.DataSource;
+import me.example.davidllorca.bakingapp.data.AsyncTaskListener;
+import me.example.davidllorca.bakingapp.data.GetRecipesAsyncTask;
 import me.example.davidllorca.bakingapp.data.Recipe;
 
 import static me.example.davidllorca.bakingapp.RecipeDetailActivity.RECIPE_KEY;
 
-public class RecipeListActivity extends AppCompatActivity implements RecipeRecyclerViewAdapter.RecipeListener {
+public class RecipeListActivity extends AppCompatActivity
+        implements RecipeRecyclerViewAdapter.RecipeListener, AsyncTaskListener<List<Recipe>> {
+
+    private RecipeRecyclerViewAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +32,12 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeRecyc
         setUpRecyclerView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new GetRecipesAsyncTask(this).execute();
+    }
+
     private void setUpRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.rv_recipes);
         boolean isTablet = getResources().getBoolean(R.bool.is_tablet);
@@ -34,7 +46,8 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeRecyc
         } else {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
-        recyclerView.setAdapter(new RecipeRecyclerViewAdapter(this, DataSource.generateFakeData(this), this));
+        mAdapter = new RecipeRecyclerViewAdapter(this, this);
+        recyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -42,6 +55,11 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeRecyc
         Intent intent = new Intent(this, RecipeDetailActivity.class);
         intent.putExtra(RECIPE_KEY, recipe);
         startActivity(intent);
+    }
+
+    @Override
+    public void onTaskCompleted(List<Recipe> result) {
+        mAdapter.initDataSet(result);
     }
 }
 

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.List;
@@ -41,6 +42,9 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeInf
         Toolbar toolbar = findViewById(R.id.toolbar_recipe_detail);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(!getResources().getBoolean(R.bool
+                .is_tablet));
+
         mRecipe = getIntent().getParcelableExtra(RECIPE_KEY);
         if(mRecipe == null){
             finish();
@@ -61,6 +65,14 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeInf
         assert stepRecyclerView != null;
         setupRecyclerView((RecyclerView) ingredientRecyclerView, mRecipe.getIngredients());
         setupRecyclerView((RecyclerView) stepRecyclerView, mRecipe.getSteps());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView, List items) {

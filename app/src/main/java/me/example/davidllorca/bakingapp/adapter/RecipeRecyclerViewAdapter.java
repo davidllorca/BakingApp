@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.example.davidllorca.bakingapp.R;
@@ -27,12 +28,18 @@ public class RecipeRecyclerViewAdapter extends RecyclerView.Adapter<RecipeRecycl
     private RecipeRecyclerViewAdapter.RecipeListener mListener;
 
 
-    public RecipeRecyclerViewAdapter(Context context, List<Recipe> dataSet,
-                                     RecipeRecyclerViewAdapter.RecipeListener listener) {
+    public RecipeRecyclerViewAdapter(Context context, RecipeRecyclerViewAdapter.RecipeListener
+            listener) {
         super();
         mContext = context;
-        mDataSet = dataSet;
+        mDataSet = new ArrayList<>();
         mListener = listener;
+    }
+
+    public void initDataSet(List<Recipe> recipes) {
+        mDataSet.clear();
+        mDataSet.addAll(recipes);
+        notifyDataSetChanged();
     }
 
     @Override

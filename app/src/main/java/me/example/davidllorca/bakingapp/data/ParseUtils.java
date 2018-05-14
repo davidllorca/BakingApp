@@ -20,15 +20,14 @@ import java.util.List;
 import me.example.davidllorca.bakingapp.R;
 
 /**
- * Helper class for providing data.
+ * Helper class for parsing data.
  *
  */
-public class DataSource {
+public class ParseUtils {
 
-    public static List<Recipe> generateFakeData(Context context) {
-        String json = getDataFromResources(context);
+    public static List<Recipe> parseGetRecipesResponse(String response) {
         try {
-            JSONArray array = new JSONArray(json);
+            JSONArray array = new JSONArray(response);
             List<Recipe> recipes = new ArrayList<>();
             for (int i = 0; i < array.length(); i++) {
                 Recipe recipe = parseRecipe(array.optString(i));
@@ -43,6 +42,7 @@ public class DataSource {
             return null;
         }
     }
+
 
     private static Recipe parseRecipe(String json) {
         try {
