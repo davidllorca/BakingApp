@@ -1,23 +1,11 @@
 package me.example.davidllorca.bakingapp.data;
 
-import android.content.Context;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
-
-import me.example.davidllorca.bakingapp.R;
 
 /**
  * Helper class for parsing data.
@@ -129,30 +117,6 @@ public class ParseUtils {
             e.printStackTrace();
             return null;
         }
-    }
-
-    private static String getDataFromResources(Context context) {
-        InputStream is = context.getResources().openRawResource(R.raw.data);
-        Writer writer = new StringWriter();
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                is.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return writer.toString();
     }
 
 }

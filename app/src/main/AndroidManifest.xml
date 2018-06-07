@@ -31,6 +31,7 @@
         </activity>
         <activity
             android:name=".StepDetailActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName=".RecipeDetailActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -47,6 +48,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/recipe_ingredients_widget_info" />
         </receiver>
+
     </application>
 
 </manifest>

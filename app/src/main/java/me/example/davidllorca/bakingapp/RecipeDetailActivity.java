@@ -1,5 +1,7 @@
 package me.example.davidllorca.bakingapp;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -65,6 +67,16 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeInf
         assert stepRecyclerView != null;
         setupRecyclerView((RecyclerView) ingredientRecyclerView, mRecipe.getIngredients());
         setupRecyclerView((RecyclerView) stepRecyclerView, mRecipe.getSteps());
+
+        updateWidgets();
+    }
+
+    private void updateWidgets() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this,
+                IngredientsWidgetProvider.class));
+        //Now update all widgets
+        IngredientsWidgetProvider.updateRecipeWidget(this, appWidgetManager, appWidgetIds, mRecipe);
     }
 
     @Override
