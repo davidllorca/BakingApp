@@ -40,14 +40,14 @@
         </activity>
 
         <service
-            android:name=".WidgetUpdateService"
+            android:name=".widget.WidgetUpdateService"
             android:exported="false">
             <intent-filter>
                 <action android:name="me.example.davidllorca.bakingapp.widgetupdateservice.update_app_widget" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".IngredientWidgetProvider">
+        <receiver android:name=".widget.IngredientWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -58,7 +58,7 @@
         </receiver>
 
         <service
-            android:name=".ListViewWidgetService"
+            android:name=".widget.ListViewWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>

@@ -1,4 +1,4 @@
-package me.example.davidllorca.bakingapp;
+package me.example.davidllorca.bakingapp.widget;
 
 import android.app.IntentService;
 import android.appwidget.AppWidgetManager;
@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+
+import me.example.davidllorca.bakingapp.R;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 14/06/18.

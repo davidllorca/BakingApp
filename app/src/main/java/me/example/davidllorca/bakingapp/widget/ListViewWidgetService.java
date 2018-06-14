@@ -1,4 +1,4 @@
-package me.example.davidllorca.bakingapp;
+package me.example.davidllorca.bakingapp.widget;
 
 /**
  * Created by David Llorca <davidllorcabaron@gmail.com> on 14/06/18.
@@ -11,6 +11,7 @@ import android.widget.RemoteViewsService;
 
 import java.util.ArrayList;
 
+import me.example.davidllorca.bakingapp.R;
 import me.example.davidllorca.bakingapp.data.WidgetDataModel;
 
 public class ListViewWidgetService extends RemoteViewsService {

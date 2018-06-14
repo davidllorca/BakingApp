@@ -1,4 +1,4 @@
-package me.example.davidllorca.bakingapp;
+package me.example.davidllorca.bakingapp.widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -9,6 +9,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.RemoteViews;
+
+import me.example.davidllorca.bakingapp.R;
+import me.example.davidllorca.bakingapp.RecipeListActivity;
 
 import static me.example.davidllorca.bakingapp.RecipeDetailActivity.PREF_KEY_RECIPE_NAME;
 

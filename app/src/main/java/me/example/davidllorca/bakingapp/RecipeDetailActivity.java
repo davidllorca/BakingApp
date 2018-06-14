@@ -18,6 +18,7 @@ import me.example.davidllorca.bakingapp.adapter.RecipeInfoRecyclerViewAdapter;
 import me.example.davidllorca.bakingapp.data.Ingredient;
 import me.example.davidllorca.bakingapp.data.Recipe;
 import me.example.davidllorca.bakingapp.data.Step;
+import me.example.davidllorca.bakingapp.widget.WidgetUpdateService;
 
 /**
  * An activity representing a list of Recipes. This activity
