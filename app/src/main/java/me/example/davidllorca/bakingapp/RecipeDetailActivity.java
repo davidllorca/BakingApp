@@ -1,9 +1,9 @@
 package me.example.davidllorca.bakingapp;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.HashSet;
 import java.util.List;
 
 import me.example.davidllorca.bakingapp.adapter.RecipeInfoRecyclerViewAdapter;
+import me.example.davidllorca.bakingapp.data.Ingredient;
 import me.example.davidllorca.bakingapp.data.Recipe;
 import me.example.davidllorca.bakingapp.data.Step;
 
@@ -28,6 +30,10 @@ import me.example.davidllorca.bakingapp.data.Step;
 public class RecipeDetailActivity extends AppCompatActivity implements RecipeInfoRecyclerViewAdapter.RecipeStepListener {
 
     public static final String RECIPE_KEY = "recipe";
+
+    public static final String PREF_KEY_RECIPE_NAME = "recipe_name";
+    public static final String PREF_KEY_INGREDIENTS = "ingredients";
+
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -68,15 +74,19 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeInf
         setupRecyclerView((RecyclerView) ingredientRecyclerView, mRecipe.getIngredients());
         setupRecyclerView((RecyclerView) stepRecyclerView, mRecipe.getSteps());
 
-        updateWidgets();
+        saveLastRecipeVisualized();
     }
 
-    private void updateWidgets() {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this,
-                IngredientsWidgetProvider.class));
-        //Now update all widgets
-        IngredientsWidgetProvider.updateRecipeWidget(this, appWidgetManager, appWidgetIds, mRecipe);
+    private void saveLastRecipeVisualized() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences.edit().putString(PREF_KEY_RECIPE_NAME, mRecipe.getName()).apply();
+        HashSet ingredients = new HashSet();
+        for (Ingredient i : mRecipe.getIngredients()) {
+            ingredients.add(i.getIngredient());
+        }
+
+        preferences.edit().putStringSet(PREF_KEY_INGREDIENTS, ingredients).apply();
+        WidgetUpdateService.startActionUpdateAppWidgets(this, true);
     }
 
     @Override

@@ -39,15 +39,27 @@
                 android:value="me.example.davidllorca.bakingapp.RecipeDetailActivity" />
         </activity>
 
-        <receiver android:name=".IngredientsWidgetProvider">
+        <service
+            android:name=".WidgetUpdateService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="me.example.davidllorca.bakingapp.widgetupdateservice.update_app_widget" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".IngredientWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/recipe_ingredients_widget_info" />
+                android:resource="@xml/recipe_widget_info" />
         </receiver>
+
+        <service
+            android:name=".ListViewWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
     </application>
 
