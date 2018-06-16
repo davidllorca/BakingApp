@@ -33,6 +33,7 @@ public class StepDetailFragment extends Fragment {
     public static final String STEP_KEY = "step";
     private static final String HAS_PREVIOUS_KEY = "hasPrevious";
     private static final String HAS_NEXT_KEY = "hasNext";
+    private final String STATE_PLAY_WHEN_READY = "playWhenReady";
     private final String STATE_RESUME_WINDOW = "resumeWindow";
     private final String STATE_RESUME_POSITION = "resumePosition";
     private final String STATE_PLAYER_FULLSCREEN = "playerFullscreen";
@@ -51,6 +52,7 @@ public class StepDetailFragment extends Fragment {
     private boolean mPlayerFullscreen = false;
     private int mResumeWindow;
     private long mResumePosition;
+    private boolean mPlayWhenReady;
 
     public StepDetailFragment() {
     }
@@ -82,6 +84,7 @@ public class StepDetailFragment extends Fragment {
             hasNextStep = savedInstanceState.getBoolean(HAS_NEXT_KEY);
             mResumeWindow = savedInstanceState.getInt(STATE_RESUME_WINDOW);
             mResumePosition = savedInstanceState.getLong(STATE_RESUME_POSITION);
+            mPlayWhenReady = savedInstanceState.getBoolean(STATE_PLAY_WHEN_READY);
             mPlayerFullscreen = savedInstanceState.getBoolean(STATE_PLAYER_FULLSCREEN);
         }
     }
@@ -104,6 +107,7 @@ public class StepDetailFragment extends Fragment {
         outState.putBoolean(HAS_NEXT_KEY, hasNextStep);
         outState.putInt(STATE_RESUME_WINDOW, mResumeWindow);
         outState.putLong(STATE_RESUME_POSITION, mResumePosition);
+        outState.putBoolean(STATE_PLAY_WHEN_READY, mPlayWhenReady);
         outState.putBoolean(STATE_PLAYER_FULLSCREEN, mPlayerFullscreen);
         super.onSaveInstanceState(outState);
     }
@@ -213,7 +217,7 @@ public class StepDetailFragment extends Fragment {
         Uri uri = Uri.parse(step.getVideoURL());
         MediaSource mediaSource = buildMediaSource(uri);
         player.prepare(mediaSource, true, false);
-        player.setPlayWhenReady(true);
+        player.setPlayWhenReady(mPlayWhenReady);
     }
 
     private MediaSource buildMediaSource(Uri uri) {
@@ -243,7 +247,7 @@ public class StepDetailFragment extends Fragment {
         if (mPlayerView != null && mPlayerView.getPlayer() != null) {
             mResumeWindow = mPlayerView.getPlayer().getCurrentWindowIndex();
             mResumePosition = Math.max(0, mPlayerView.getPlayer().getContentPosition());
-
+            mPlayWhenReady = mPlayerView.getPlayer().getPlayWhenReady();
             mPlayerView.getPlayer().release();
         }
 
