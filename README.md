@@ -1,2 +1,2 @@
-# BakingApp [Project app]
+# BakingApp [Course app]
 Project app from Udacity Course
